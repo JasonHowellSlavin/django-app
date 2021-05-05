@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from django.core.paginator import Paginator
 from rest_framework import viewsets
 from .serializers import PoemSerializer
 from .models import Poem
@@ -8,7 +9,7 @@ import json
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return HttpResponse("Hello, world. You're at the poems index.")
 
 class PoemView(viewsets.ModelViewSet):
     serializer_class = PoemSerializer
@@ -32,10 +33,14 @@ def search(request):
     search_value = body['search_value']
 
     searched = Poem.objects.filter(author_title__contains=search_value)
-    print("searched!!!!", searched)
+    p = Paginator(searched, 5)
 
-    returnal = list(searched.values())
+    data = []
+    for page_num in range(1, p.num_pages + 1):
+        data.append({'page_num': page_num, 'poems': list(p.page(page_num).object_list.values())})
 
-    return JsonResponse({"status": "200", "message": "you hit search", "searched": returnal})
+    paginatedResults = list(data)
+
+    return JsonResponse({"status": "200", "message": "you hit search", "searched": paginatedResults})
 
 

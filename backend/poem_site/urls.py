@@ -22,6 +22,7 @@ router = routers.DefaultRouter()
 router.register(r'poems', views.PoemView, 'poems')
 
 urlpatterns = [
+    path('', views.index, name='index'),
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/update_many/', views.update_many, name='update_many'),
