@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from .serializers import PoemSerializer
 from .models import Poem
 from django.views.decorators.csrf import csrf_exempt
-import logging
+import json
 
 # Create your views here.
 def index(request):
@@ -16,12 +16,26 @@ class PoemView(viewsets.ModelViewSet):
 
 @csrf_exempt
 def update_many(request):
-    serializer_class = PoemSerializer
-    print('Hello 2', request.body)
+    body = json.loads(request.body)
     
     try:
-        Poem.objects.bulk_create(request.body)
-        return JsonResponse({"status": "200", "message": "Success"})
+        for entry in body:
+            new_poem = Poem(author_title=entry['author_title'], poem_content=entry['poem_content'])
+            new_poem.save()
+        return JsonResponse({"status": "200", "message": "Success" })
     except (KeyError):
         return JsonResponse({"status": "500", "message": KeyError})
+
+@csrf_exempt
+def search(request):
+    body = json.loads(request.body)
+    search_value = body['search_value']
+
+    searched = Poem.objects.filter(author_title__contains=search_value)
+    print("searched!!!!", searched)
+
+    returnal = list(searched.values())
+
+    return JsonResponse({"status": "200", "message": "you hit search", "searched": returnal})
+
 

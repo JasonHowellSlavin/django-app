@@ -1,14 +1,15 @@
 import React, {useState, useEffect} from 'react';
+import { retrievePoems, postPoemsToDb, readyDataForEntry } from '../utils/utils';
 
 function NewPoems({setMethod}) {
-    const requestNewPoems = async () => {
-        fetch('https://www.poemist.com/api/v1/randompoems')
-        .then((response) => {
-            return response.json();
-        }).then((resJson) => {
-            setMethod(resJson);
-        })
-        .catch((error) => console.warn(error));
+    const requestNewPoems = () => {
+        const manageNewPoems = async () => {
+            const initialPoems = await retrievePoems();
+
+            setMethod(initialPoems);
+            postPoemsToDb(readyDataForEntry(initialPoems));
+        }
+        manageNewPoems();
     }
 
     return (

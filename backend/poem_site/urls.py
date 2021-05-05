@@ -23,6 +23,7 @@ router.register(r'poems', views.PoemView, 'poems')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),\
-    path('api/update_many/', views.update_many, name='update_many')
+    path('api/', include(router.urls)),
+    path('api/update_many/', views.update_many, name='update_many'),
+    path('api/search/', views.search, name='search')
 ]

@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
 function PoemsDisplay({header, poems}) {
-    console.log('Poems! ', poems)
-
     return (
         <section className='poems-display'>
             <div className='poem-conatiner'>

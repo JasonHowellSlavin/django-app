@@ -4,11 +4,11 @@ function SelectedPoem({poem}) {
     return (
         <section className='selected-poem'>
             <div className='title-author'>
-                <p>George Eliot - Feild Bling</p>
+                <p>{poem.poet} - {poem.title}</p>
             </div>
             <div className='poem'>
                 <pre>
-                    Lorem Ipsum text text text
+                    {decodeURIComponent(poem.content)}
                 </pre>
             </div>
         </section>  

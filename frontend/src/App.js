@@ -1,53 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import fetch from 'node-fetch';
 import './App.scss';
 import PoemsDisplay from './components/PoemsDisplay';
 import NewPoems from './components/NewPoems';
 import Search from './components/Search';
 import SelectedPoem from './components/SelectedPoem';
+import { retrievePoems, postPoemsToDb, readyDataForEntry } from './utils/utils';
 
 function App() {
     const [randomPoems, setRandomPoems] = useState([]);
-    const [backend, setBackend] = useState([])
+    const [searchedPoems, setSearchedPoems] = useState([])
 
     useEffect(() => {
-        fetch('https://www.poemist.com/api/v1/randompoems')
-        .then((response) => {
-            return response.json();
-        })
-        .then((resJson) => {
-            console.log(resJson, 'response')
-            setRandomPoems(resJson);
-        })
-        .catch((error) => console.warn(error));
-    }, []) 
+        const manageNewPoems = async () => {
+            const initialPoems = await retrievePoems();
 
-    useEffect(() => {
-        const data = [
-            {author_title: 'Gravitas', poem_content: 'This is a new peom'},
-            {author_title: 'Rambo', poem_content: 'This speom'},
-            {author_title: 'Dim Mak', poem_content: 'Aspo'},
-            {author_title: 'Dim Mak', poem_content: 'Aspo'},
-        ]
-
-        fetch('http://localhost:8000/api/update_many/', {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        .then((response) => {
-            return response.json();
-        })
-        .then((resJson) => {
-            console.log(resJson, 'response')
-            setBackend(resJson);
-        })
-        .catch((error) => console.warn(error));
-    }, []) 
-
+            setRandomPoems(initialPoems);
+            postPoemsToDb(readyDataForEntry(initialPoems));
+        }
+        manageNewPoems();
+    }, []);
 
   return (
   	<div className="App">
@@ -63,15 +34,14 @@ function App() {
                 />
             </section>
             <section className='display-wrapper'>
-                <Search />
+                <Search setMethod={setSearchedPoems}/>
                 <PoemsDisplay
                 header={['Results']}
-                poems={[{ poet: 'George Eliot', title: 'Field Bling' }]}
+                poems={searchedPoems}
                 />
             </section>
         </div>
-       <SelectedPoem poem='' />
-       <div><pre>{randomPoems[0] !== undefined && randomPoems[0].content}</pre></div>
+       <SelectedPoem poem={searchedPoems[0]} />
     </div>
   );
 }
