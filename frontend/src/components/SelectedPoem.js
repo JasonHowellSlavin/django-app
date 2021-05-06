@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import './SelectedPoem.scss';
 
 function SelectedPoem({poem}) {
+    const name = poem.poet.name !== undefined ? poem.poet.name : poem.poet;
+
     return (
         <section className='selected-poem'>
             <div className='title-author'>
-                <p>{poem.poet} - {poem.title}</p>
+                <p>{name} - {poem.title}</p>
             </div>
             <div className='poem'>
                 <pre>

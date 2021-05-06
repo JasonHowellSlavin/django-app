@@ -1,0 +1,59 @@
+.poems-display {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    section {
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+        border: 2px solid black;
+
+        .poem-item {
+            display: flex;
+            flex-direction: row;
+            min-width: 200px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: lightseagreen;
+            }
+
+            &:last-of-type {
+                border-bottom: none;
+            }
+
+            p {
+                margin: 0;
+                padding: 10px;
+                width: 100%;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            p:first-of-type {
+                border-right: 2px solid black;
+                height: 100%;
+            }
+        }
+    }
+
+    .container-header {
+        display: flex;
+        flex-direction: row;
+        border: 2px solid black;
+        background-color: lightblue;
+        margin: 20px 0;
+
+        h3 {
+            width: 100%;
+            padding: 10px 5px;
+            margin: 0;
+
+            &:nth-of-type(2) {
+                border-left: 2px solid black;
+            }
+        }
+    }
+}

@@ -1,4 +1,3 @@
-import React, {useState, useEffect} from 'react';
 import { retrievePoems, postPoemsToDb, readyDataForEntry } from '../utils/utils';
 
 function NewPoems({setMethod}) {
@@ -14,7 +13,7 @@ function NewPoems({setMethod}) {
 
     return (
         <div>
-            <button onClick={() => {requestNewPoems()}}>New Poems</button>
+            <button className='new-poems' onClick={() => {requestNewPoems()}}>Get New Poems</button>
         </div>
     )
 }

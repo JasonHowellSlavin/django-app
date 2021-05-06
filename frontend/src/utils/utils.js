@@ -36,11 +36,19 @@ export const postPoemsToDb = (dbData) => {
 export const formatDbSearchResults = (results) => {
     return results.reduce((accum, item) => {
         const poem = {
-            poet: item.author_title.split('-')[0].trim(),
-            title: item.author_title.split('-')[1].trim(),
+            poet: item.author_title.split(' - ')[0].trim(),
+            title: item.author_title.split(' - ')[1].trim(),
             content: item.poem_content
         }
         accum.push(poem);
         return accum;
     }, [])
+}
+
+export const lastPage = (searchData) => {
+    if (searchData.length > 0) {
+        return searchData[searchData.length - 1].page_num;
+    }
+
+    return 1;
 }

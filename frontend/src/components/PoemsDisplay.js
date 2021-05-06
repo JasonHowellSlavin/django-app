@@ -1,19 +1,21 @@
-import React, {useState, useEffect} from 'react';
+import './PoemsDisplay.scss';
 
-function PoemsDisplay({header, poems}) {
+function PoemsDisplay({header, poems, setCurrentPoemMethod}) {
     return (
         <section className='poems-display'>
             <div className='poem-conatiner'>
                 <div className='container-header'>
-                    {header.map(item => <h3>{item}</h3>)}
+                    {header.map(item => <h3 key={`header:${item}`}>{item}</h3>)}
                 </div>
-                <section>
-                    <div className='poem-item'>
-                        {poems.map(item => <p>{item.title}</p>)}
-                    </div>
-                    <div className='poem-item'> 
-                        {poems.map(item => <p>{item.poet.name ? item.poet.name : item.poet}</p>)}
-                    </div>
+                <section style={poems.length < 1 ? {border: 'none'} : {}}>
+                    {poems.map((item, index) => {
+                        return (
+                            <div className='poem-item' key={`poem-item${item.title}${index}`} onClick={() => setCurrentPoemMethod(item)}>
+                                <p>{item.title}</p>
+                                <p>{item.poet.name ? item.poet.name : item.poet}</p>
+                            </div>
+                        )
+                    })}
                 </section>
             </div>
       </section>

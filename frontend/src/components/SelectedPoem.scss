@@ -1,0 +1,26 @@
+.selected-poem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-width: 400px;
+    margin: 20px;
+
+    > * {
+        border: 2px solid black;
+    }
+
+   .title-author {
+      min-width: 400px;
+      font-size: 18px;
+      padding: 0 15px;
+      margin: 10px;
+   }
+
+   .poem {
+    min-width: 600px;
+    padding: 0 15px;
+    margin: 10px;
+   }
+}

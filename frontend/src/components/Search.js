@@ -1,8 +1,7 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import { debounce } from 'debounce';
-import { formatDbSearchResults } from '../utils/utils';
 
-function Search({setMethod}) {
+function Search({setSearchedMethod, setResultsPageMethod}) {
     const [searchInput, setSearchInput] = useState('');
     const search = (value) => {
             const searchValue = {search_value: value}
@@ -19,9 +18,12 @@ function Search({setMethod}) {
                     return response.json();
                 })
                 .then((resJson) => {
-                    const formatted = formatDbSearchResults(resJson.searched);
-            
-                    setMethod(formatted);
+                    const results = resJson.searched;
+
+                    setSearchedMethod(results);
+                    if (results.length > 0) {
+                        setResultsPageMethod(results[0].poems);
+                    }
                 })
                 .catch((error) => console.warn(error));
     }
