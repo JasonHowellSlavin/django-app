@@ -28,7 +28,7 @@ There are definitely parts of the app I would have improved had I had time. I am
     - It is not necessarily clear that clicking on a poem will show its full text.
     - I would like a visual indicator showing on which poem I am currently clicked.
     - I did not take mobile into account at this stage.
-    - Loading animations for the initial and subsiquent calls to get poems would be a nice touch.
+    - Loading animations for the initial and subsequent calls to get poems would be a nice touch.
 4. Get the proxy working so I could use relative urls to make the API calls. 
 5. I would have liked to find a way to not bypass the crsf tokens in the backend; this is a security issue.
 6. Ensured I was using the most performant methods for the models and querysets instead of for loops. 
